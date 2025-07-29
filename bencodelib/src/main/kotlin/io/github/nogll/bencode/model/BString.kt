@@ -11,7 +11,9 @@ class BString(
         val DEFAULT_CHARSET = Charsets.UTF_8
     }
 
-    constructor(str: String) : this(str.toByteArray(), 0, str.length - 1)
+    constructor(str: String) : this(str.toByteArray(), 0, 0)
+
+    constructor(bytes: ByteArray) : this(bytes, 0, 0)
 
     override fun toBStringOrThrow(): BString = this
 
@@ -38,3 +40,5 @@ class BString(
         return bytes.contentHashCode()
     }
 }
+
+fun String.toBString(): BString = BString(this)
