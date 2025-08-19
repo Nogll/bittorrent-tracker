@@ -8,6 +8,10 @@ group = "io.github.nogll"
 version = "0.0.1-SNAPSHOT"
 
 dependencies {
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("org.jmdns:jmdns:3.6.1")
+    implementation("redis.clients:jedis:6.0.0")
+    implementation("io.github.oshai:kotlin-logging:7.0.12")
 	implementation(project(":bencodelib"))
 	implementation("org.springframework.boot:spring-boot-starter-data-redis")
 	implementation("org.springframework.boot:spring-boot-starter-web")

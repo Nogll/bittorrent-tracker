@@ -124,20 +124,18 @@ data class TrackerResponse(
 
     /**
      * Преобразует класс к BDict
-     * Если указаны все peerId то будет использована Dict model
-     * Иначе Binary model
+     * @param dictModel - выбор модели Dict or Binary, по умолчанию Dict
      * @throws IllegalArgumentException если не удается преобразовать ip в Binary model
      */
-    fun toBDict(): BDict {
-        val isBDictModel = peers.asSequence().all { it.peerId != null }
-        val peersElement: BElement = when(isBDictModel) {
+    fun toBDict(dictModel: Boolean = true): BDict {
+        val peersElement: BElement = when(dictModel) {
             true -> {
                 BList(peers.map {
-                    mapOf(
-                        PEER_ID to it.peerId!!,
-                        IP to it.ip.toBString(),
-                        PORT to BInt(it.port.toLong())
-                    )
+                    buildMap {
+                        it.peerId?.let { peerId -> put(PEER_ID, peerId) }
+                        put(IP, it.ip.toBString())
+                        put(PORT, BInt(it.port.toLong()))
+                    }
                 }.map { BDict(it) })
             }
 
